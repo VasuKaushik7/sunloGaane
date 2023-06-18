@@ -9,6 +9,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
+import { useNavigate } from "react-router-dom";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -35,7 +36,13 @@ const images = [
   },
 ];
 
+
+
 function Carousel() {
+  const navigate=useNavigate();
+  function handleClick(){
+    navigate('/desc')
+  }
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
@@ -64,6 +71,7 @@ function Carousel() {
           pl: 2,
           bgcolor: 'background.default',
         }}
+        onClick={handleClick}
       >
         <Typography>{images[activeStep].label}</Typography>
       </Paper>
@@ -74,7 +82,7 @@ function Carousel() {
         enableMouseEvents
       >
         {images.map((step, index) => (
-          <div key={step.label}>
+          <div key={step.label} style={{cursor:"pointer"}} onClick={handleClick}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
